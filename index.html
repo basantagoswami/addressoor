@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Addressoor - Lightning & Nostr Address Server</title>
+		<link
+			rel="icon"
+			type="image/png"
+			href="https://i.imgur.com/EXcpaWc.png"
+		/>
+    <!-- TODO: replace with some locally stored fonts -->
+		<link
+			rel="stylesheet"
+			type="text/css"
+			href="http://fonts.googleapis.com/css?family=PT+Sans"
+		/>
+		<link rel="stylesheet" href="./static/style.css" />
+	</head>
+	<body>
+		<main id="main">
+			<div class="title">{{ siteName }}</div>
+			<div class="tagline">Lightning & Nostr Address Server</div>
+			<div class="owner">
+				<a class="owner-button" :href="siteOwnerURL" target="_blank">
+					Brought to you by
+					<span class="owner-name">{{ siteOwnerName }}</span>
+				</a>
+			</div>
+
+			<div class="card">
+				<form action="/grab" method="post">
+					<div class="field">
+						<div class="row">
+							<!-- TODO: replace with hardcode info -->
+							<label for="name"> {{usernameInfo}} </label>
+						</div>
+					</div>
+
+					<div class="domain-wrapper">
+						<input class="input" name="name" id="name" />
+						<span v-if="domains.length == 1"
+							>@{{ domains[0] }}</span
+						>
+						<span v-if="domains.length > 1">@</span>
+						<select
+							name="domain"
+							id="domain"
+							v-if="domains.length > 1"
+						>
+							<option v-for="domain in domains" :value="domain">
+								{{ domain }}
+							</option>
+						</select>
+					</div>
+
+					<div class="field" v-if="!isNew">
+						<label for="pin"> Secret PIN </label>
+						<input class="input full-width" name="pin" id="pin" />
+					</div>
+
+          <div class="field">
+            <label style="float: right">
+              This is a new Lightning Address
+              <input type="checkbox" v-model="isNew" />
+            </label>
+          </div>
+
+					<button class="submit">Submit</button>
+				</form>
+			</div>
+		</main>
+	</body>
+</html>
